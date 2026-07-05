@@ -250,7 +250,7 @@ td.bad{color:#fca5a5}
 <div class="toast" id="toast"></div>
 
 <script>
-// 📑 REGISTERED USERS HARDWARE LIST (Ekdum Correct ID Ke Sath)
+// 📑 REGISTERED USERS HARDWARE LIST (Aapki screenshot ke dono bande map hain)
 const REGISTERED_HARDWARE = {
   "Lalit@121": "HWID_68ef06e5",
   "Lalit@122": "HWID_5d117d9d"
@@ -477,6 +477,7 @@ async function runWithConcurrency(cards, maxConcurrent, onResult){
   await Promise.all(workers);
 }
 
+// Fixed resolution logic
 function isResolved(r){
   if(r._retry) return false;
   if(r.error !== undefined) return false;
