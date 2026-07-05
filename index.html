@@ -250,10 +250,15 @@ td.bad{color:#fca5a5}
 <div class="toast" id="toast"></div>
 
 <script>
-// 📑 REGISTERED USERS HARDWARE LIST (Donon entries properly map kar di hain)
+// 📑 REGISTERED USERS HARDWARE LIST (Smart Auto-Lowercase Mapping)
+// Format -> "chota_password": "choti_hwid"
 const REGISTERED_HARDWARE = {
-  "Lalit@121": "HWID_68ef06e5",
-  "Lalit@122": "HWID_5d117d9d"
+  "lalit@121": "hwid_68ef06e5",
+  "lalit@122": "hwid_5d117d9d",
+  "user3": "hwid_here",
+  "user4": "hwid_here",
+  "user5": "hwid_here"
+  // Aap bina kisi tension ke ek ke niche ek pure 50+ users add kar sakte hain!
 };
 
 // 🤖 Background Automatic HWID Generation Logic
@@ -289,7 +294,9 @@ if (localStorage.getItem('croma_verified_hardware') === 'true') {
 }
 
 function verifyDeviceHardware() {
-  const inputKey = document.getElementById('authKey').value.trim();
+  // Input password aur dynamic HWID ko chote letters (.toLowerCase()) me badalna taaki case mismatch na ho
+  const inputKey = document.getElementById('authKey').value.trim().toLowerCase();
+  const dynamicHWID = currentPhoneID.toLowerCase();
   const errorDisplay = document.getElementById('authError');
   errorDisplay.style.display = "none";
 
@@ -299,10 +306,10 @@ function verifyDeviceHardware() {
     return;
   }
 
-  // 1. Check if password exists
+  // 1. Check if password exists in lowerCase list
   if (REGISTERED_HARDWARE[inputKey]) {
-    // 2. Match background hardware hash fingerprint
-    if (REGISTERED_HARDWARE[inputKey] === currentPhoneID) {
+    // 2. Match background hardware hash fingerprint (both in lowercase)
+    if (REGISTERED_HARDWARE[inputKey].toLowerCase() === dynamicHWID) {
       localStorage.setItem('croma_verified_hardware', 'true');
       const screen = document.getElementById('lockScreen');
       screen.style.transition = "opacity 0.3s ease";
