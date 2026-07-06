@@ -250,14 +250,18 @@ td.bad{color:#fca5a5}
 <div class="toast" id="toast"></div>
 
 <script>
-// 📑 REGISTERED USERS HARDWARE LIST (Smart Auto-Lowercase Mapping)
+// 📑 REGISTERED USERS HARDWARE LIST (Cleaned & 1 to 10 Templates Configured)
 const REGISTERED_HARDWARE = {
   "lalit@121": "hwid_68ef06e5",
   "lalit@122": "hwid_5d117d9d",
   "admin@123": "hwid_4eff84f4",
   "kapil@croma": "hwid_5b34034a",
   "ditlovish211@": "hwid_4f87d488",
-  "user5": "hwid_here"
+  "user6": "hwid_here_6",
+  "user7": "hwid_here_7",
+  "user8": "hwid_here_8",
+  "user9": "hwid_here_9",
+  "user10": "hwid_here_10"
 };
 
 // 🤖 Background Automatic HWID Generation Logic
@@ -496,6 +500,7 @@ function isResolved(r){
   return true;
 }
 
+// Render Engine Updates
 function renderTable(){
   const tb = document.getElementById('cTb');
   tb.innerHTML = '';
