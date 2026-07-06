@@ -251,15 +251,13 @@ td.bad{color:#fca5a5}
 
 <script>
 // 📑 REGISTERED USERS HARDWARE LIST (Smart Auto-Lowercase Mapping)
-// Format -> "chota_password": "choti_hwid"
 const REGISTERED_HARDWARE = {
   "lalit@121": "hwid_68ef06e5",
   "lalit@122": "hwid_5d117d9d",
-  "admin@123": "HWID_4eff84f4",
-  "kapil@croma": "HWID_5b34034a",
-  "ditlovish211@": "HWID_4f87d488"
+  "admin@123": "hwid_4eff84f4",
+  "kapil@croma": "hwid_5b34034a",
+  "ditlovish211@": "hwid_4f87d488",
   "user5": "hwid_here"
-  // Aap bina kisi tension ke ek ke niche ek pure 50+ users add kar sakte hain!
 };
 
 // 🤖 Background Automatic HWID Generation Logic
@@ -284,10 +282,20 @@ function getAutomaticDeviceID() {
 
 const currentPhoneID = getAutomaticDeviceID();
 
-// Show the background generated HWID on UI instantly
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('showMyID').textContent = currentPhoneID;
-});
+// Instant ID display logic logic taaki "Generating ID..." par kabhi na fase
+function displayHardwareID() {
+  const idElement = document.getElementById('showMyID');
+  if (idElement) {
+    idElement.textContent = currentPhoneID;
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', displayHardwareID);
+} else {
+  displayHardwareID();
+}
+window.addEventListener('load', displayHardwareID);
 
 // Immediate bypass check if saved inside local secure storage
 if (localStorage.getItem('croma_verified_hardware') === 'true') {
@@ -295,7 +303,6 @@ if (localStorage.getItem('croma_verified_hardware') === 'true') {
 }
 
 function verifyDeviceHardware() {
-  // Input password aur dynamic HWID ko chote letters (.toLowerCase()) me badalna taaki case mismatch na ho
   const inputKey = document.getElementById('authKey').value.trim().toLowerCase();
   const dynamicHWID = currentPhoneID.toLowerCase();
   const errorDisplay = document.getElementById('authError');
@@ -307,9 +314,7 @@ function verifyDeviceHardware() {
     return;
   }
 
-  // 1. Check if password exists in lowerCase list
   if (REGISTERED_HARDWARE[inputKey]) {
-    // 2. Match background hardware hash fingerprint (both in lowercase)
     if (REGISTERED_HARDWARE[inputKey].toLowerCase() === dynamicHWID) {
       localStorage.setItem('croma_verified_hardware', 'true');
       const screen = document.getElementById('lockScreen');
